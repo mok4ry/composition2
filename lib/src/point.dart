@@ -25,6 +25,10 @@ class Point {
     return (x > y) ? (x * x + x + y) : (y * y + x);
   }
 
+  bool operator == (dynamic other) {
+    return other is Point && other.getX() == _x && other.getY() == _y;
+  }
+
   String toString() {
     return '(${_x}, ${_y})';
   }

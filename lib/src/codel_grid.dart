@@ -39,7 +39,7 @@ class CodelGrid {
     return x >= 0 && x < _width && y >= 0 && y < _height;
   }
 
-  List<Codel> _getColorBlock(Point position, Map visited, Color color) {
+  List<Codel> _getColorBlock(Point position, Set visited, Color color) {
     List<Codel> colorBlock = List<Codel>();
     Codel codel = getCodel(position);
 
@@ -48,25 +48,25 @@ class CodelGrid {
     }
 
     colorBlock.add(codel);
-    visited[position.hashCode] = true;
+    visited.add(position);
 
     Point above = position.getRelative(0, -1);
-    if (isInBounds(above) && !visited.containsKey(above.hashCode)) {
+    if (isInBounds(above) && !visited.contains(above)) {
       colorBlock.addAll(_getColorBlock(above, visited, color));
     }
 
     Point right = position.getRelative(1, 0);
-    if (isInBounds(right) && !visited.containsKey(right.hashCode)) {
+    if (isInBounds(right) && !visited.contains(right)) {
       colorBlock.addAll(_getColorBlock(right, visited, color));
     }
 
     Point below = position.getRelative(0, 1);
-    if (isInBounds(below) && !visited.containsKey(below.hashCode)) {
+    if (isInBounds(below) && !visited.contains(below)) {
       colorBlock.addAll(_getColorBlock(below, visited, color));
     }
 
     Point left = position.getRelative(-1, 0);
-    if (isInBounds(left) && !visited.containsKey(left.hashCode)) {
+    if (isInBounds(left) && !visited.contains(left)) {
       colorBlock.addAll(_getColorBlock(left, visited, color));
     }
 
@@ -80,7 +80,7 @@ class CodelGrid {
       return codel.getColorBlock();
     }
 
-    List<Codel> colorBlock = _getColorBlock(position, Map(), getCodel(position).getColor());
+    List<Codel> colorBlock = _getColorBlock(position, Set(), getCodel(position).getColor());
 
     _colorBlocks.add(colorBlock);
     colorBlock.forEach((Codel c) => c.setColorBlock(_colorBlocks.last));
