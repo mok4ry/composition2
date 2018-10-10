@@ -1,8 +1,7 @@
 import 'package:composition2/src/codel.dart';
 import 'package:composition2/src/color.dart';
 import 'package:composition2/src/colors.dart';
-
-String getCoordId(int x, int y) => '${x},${y}';
+import 'package:composition2/src/point.dart';
 
 Color DEFAULT_COLOR = Colors.WHITE;
 const int DEFAULT_WIDTH = 20;
@@ -24,57 +23,64 @@ class CodelGrid {
     _grid = List<List<Codel>>.generate(_width, (int i) => List<Codel>.generate(this._height, (int i) => Codel(_defaultColor)));
   }
 
-  void setCodel(Codel c, int x, int y) {
-    c.setCoords(x, y);
-    _grid[x][y] = c;
+  void setCodel(Codel c, Point p) {
+    c.setPosition(p);
+    _grid[p.getX()][p.getY()] = c;
   }
 
-  Codel getCodel(int x, int y) {
-    return _grid[x][y];
+  Codel getCodel(Point p) {
+    return _grid[p.getX()][p.getY()];
   }
 
-  bool isInBounds(int x, int y) {
+  bool isInBounds(Point p) {
+    int x = p.getX();
+    int y = p.getY();
+
     return x >= 0 && x < _width && y >= 0 && y < _height;
   }
 
-  List<Codel> _getColorBlock(int x, int y, Map visited, Color color) {
+  List<Codel> _getColorBlock(Point position, Map visited, Color color) {
     List<Codel> colorBlock = List<Codel>();
-    Codel codel = getCodel(x, y);
+    Codel codel = getCodel(position);
 
     if (!color.isEqual(codel.getColor())) {
       return colorBlock;
     }
 
     colorBlock.add(codel);
-    visited[getCoordId(x, y)] = true;
+    visited[position.hashCode] = true;
 
-    if (isInBounds(x, y - 1) && !visited.containsKey(getCoordId(x, y - 1))) {
-      colorBlock.addAll(_getColorBlock(x, y - 1, visited, color));
+    Point above = position.getRelative(0, -1);
+    if (isInBounds(above) && !visited.containsKey(above.hashCode)) {
+      colorBlock.addAll(_getColorBlock(above, visited, color));
     }
 
-    if (isInBounds(x + 1, y) && !visited.containsKey(getCoordId(x + 1, y))) {
-      colorBlock.addAll(_getColorBlock(x + 1, y, visited, color));
+    Point right = position.getRelative(1, 0);
+    if (isInBounds(right) && !visited.containsKey(right.hashCode)) {
+      colorBlock.addAll(_getColorBlock(right, visited, color));
     }
 
-    if (isInBounds(x, y + 1) && !visited.containsKey(getCoordId(x, y + 1))) {
-      colorBlock.addAll(_getColorBlock(x, y + 1, visited, color));
+    Point below = position.getRelative(0, 1);
+    if (isInBounds(below) && !visited.containsKey(below.hashCode)) {
+      colorBlock.addAll(_getColorBlock(below, visited, color));
     }
 
-    if (isInBounds(x - 1, y) && !visited.containsKey(getCoordId(x - 1, y))) {
-      colorBlock.addAll(_getColorBlock(x - 1, y, visited, color));
+    Point left = position.getRelative(-1, 0);
+    if (isInBounds(left) && !visited.containsKey(left.hashCode)) {
+      colorBlock.addAll(_getColorBlock(left, visited, color));
     }
 
     return colorBlock;
   }
 
-  List<Codel> getColorBlock(int x, int y) {
-    Codel codel = getCodel(x, y);
+  List<Codel> getColorBlock(Point position) {
+    Codel codel = getCodel(position);
 
     if (codel.colorBlockSet()) {
       return codel.getColorBlock();
     }
 
-    List<Codel> colorBlock = _getColorBlock(x, y, Map(), getCodel(x, y).getColor());
+    List<Codel> colorBlock = _getColorBlock(position, Map(), getCodel(position).getColor());
 
     _colorBlocks.add(colorBlock);
     colorBlock.forEach((Codel c) => c.setColorBlock(_colorBlocks.last));
@@ -82,8 +88,8 @@ class CodelGrid {
     return colorBlock;
   }
 
-  int getColorBlockSize(int x, int y) {
-    return getColorBlock(x, y).length;
+  int getColorBlockSize(Point position) {
+    return getColorBlock(position).length;
   }
 
   bool safeWidth(int newWidth) {
