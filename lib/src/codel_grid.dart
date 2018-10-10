@@ -13,16 +13,19 @@ class CodelGrid {
   int _height;
   Color _defaultColor;
   List<List<Codel>> _grid;
+  List<List<Codel>> _colorBlocks;
 
   CodelGrid({ Color defaultColor, int width, int height }) {
     _defaultColor = defaultColor == null ? DEFAULT_COLOR : defaultColor;
     _width = width == null ? DEFAULT_WIDTH : width;
     _height = height == null ? DEFAULT_HEIGHT : height;
+    _colorBlocks = List<List<Codel>>();
 
     _grid = List<List<Codel>>.generate(_width, (int i) => List<Codel>.generate(this._height, (int i) => Codel(_defaultColor)));
   }
 
   void setCodel(Codel c, int x, int y) {
+    c.setCoords(x, y);
     _grid[x][y] = c;
   }
 
@@ -65,21 +68,22 @@ class CodelGrid {
   }
 
   List<Codel> getColorBlock(int x, int y) {
-    return _getColorBlock(x, y, Map(), getCodel(x, y).getColor());
+    Codel codel = getCodel(x, y);
+
+    if (codel.colorBlockSet()) {
+      return codel.getColorBlock();
+    }
+
+    List<Codel> colorBlock = _getColorBlock(x, y, Map(), getCodel(x, y).getColor());
+
+    _colorBlocks.add(colorBlock);
+    colorBlock.forEach((Codel c) => c.setColorBlock(_colorBlocks.last));
+
+    return colorBlock;
   }
 
   int getColorBlockSize(int x, int y) {
-    Codel codel = getCodel(x, y);
-    int cachedSize = codel.getColorBlockSize();
-
-    if (cachedSize > 0) {
-      return cachedSize;
-    }
-
-    List<Codel> colorBlock = getColorBlock(x, y);
-    colorBlock.forEach((Codel c) => c.setColorBlockSize(colorBlock.length));
-
-    return codel.getColorBlockSize();
+    return getColorBlock(x, y).length;
   }
 
   bool safeWidth(int newWidth) {
