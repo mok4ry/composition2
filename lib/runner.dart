@@ -9,8 +9,8 @@ void main() {
   Codel source = Codel(Colors.WHITE);
   Codel destination = Codel(Colors.BLACK);
 
-  source.setColorBlockSize(1);
-  destination.setColorBlockSize(1);
+  source.setColorBlock([source]);
+  destination.setColorBlock([destination]);
 
   Operation op1 = Roll(stack, source, destination);
 
