@@ -2,6 +2,7 @@ import 'package:composition2/src/codel.dart';
 import 'package:composition2/src/color.dart';
 import 'package:composition2/src/colors.dart';
 import 'package:composition2/src/point.dart';
+import 'package:composition2/src/color_block.dart';
 
 Color DEFAULT_COLOR = Colors.WHITE;
 const int DEFAULT_WIDTH = 20;
@@ -12,13 +13,13 @@ class CodelGrid {
   int _height;
   Color _defaultColor;
   List<List<Codel>> _grid;
-  List<List<Codel>> _colorBlocks;
+  List<ColorBlock> _colorBlocks;
 
   CodelGrid({ Color defaultColor, int width, int height }) {
     _defaultColor = defaultColor == null ? DEFAULT_COLOR : defaultColor;
     _width = width == null ? DEFAULT_WIDTH : width;
     _height = height == null ? DEFAULT_HEIGHT : height;
-    _colorBlocks = List<List<Codel>>();
+    _colorBlocks = List<ColorBlock>();
 
     _grid = List<List<Codel>>.generate(_width, (int i) => List<Codel>.generate(this._height, (int i) => Codel(_defaultColor)));
   }
@@ -73,23 +74,24 @@ class CodelGrid {
     return colorBlock;
   }
 
-  List<Codel> getColorBlock(Point position) {
+  ColorBlock getColorBlock(Point position) {
     Codel codel = getCodel(position);
 
     if (codel.colorBlockSet()) {
       return codel.getColorBlock();
     }
 
-    List<Codel> colorBlock = _getColorBlock(position, Set(), getCodel(position).getColor());
+    List<Codel> block = _getColorBlock(position, Set(), getCodel(position).getColor());
 
+    ColorBlock colorBlock = ColorBlock(block);
     _colorBlocks.add(colorBlock);
-    colorBlock.forEach((Codel c) => c.setColorBlock(_colorBlocks.last));
+    colorBlock.getBlock().forEach((Codel c) => c.setColorBlock(_colorBlocks.last));
 
     return colorBlock;
   }
 
   int getColorBlockSize(Point position) {
-    return getColorBlock(position).length;
+    return getColorBlock(position).size();
   }
 
   bool safeWidth(int newWidth) {

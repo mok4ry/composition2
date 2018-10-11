@@ -3,6 +3,7 @@ import 'package:composition2/src/codel_grid.dart';
 import 'package:composition2/src/codel.dart';
 import 'package:composition2/src/colors.dart';
 import 'package:composition2/src/point.dart';
+import 'package:composition2/src/color_block.dart';
 
 void set_get_codel_tests() {
   test('set/get codel at same position', () {
@@ -35,10 +36,10 @@ void getColorBlock_tests() {
     Point position = Point(0, 0);
 
     grid.setCodel(Codel(Colors.BLUE), position);
-    List<Codel> colorBlock = grid.getColorBlock(position);
+    ColorBlock colorBlock = grid.getColorBlock(position);
 
-    expect(colorBlock.length, equals(1));
-    expect(colorBlock.every((c) => c.isEqual(Codel(Colors.BLUE))), equals(true));
+    expect(colorBlock.size(), equals(1));
+    expect(colorBlock.getBlock().every((c) => c.isEqual(Codel(Colors.BLUE))), equals(true));
   });
 
   test('block in a row', () {
@@ -46,10 +47,10 @@ void getColorBlock_tests() {
     grid.setCodel(Codel(Colors.BLUE), Point(0, 0));
     grid.setCodel(Codel(Colors.BLUE), Point(0, 1));
     grid.setCodel(Codel(Colors.BLUE), Point(0, 2));
-    List<Codel> colorBlock = grid.getColorBlock(Point(0, 0));
+    ColorBlock colorBlock = grid.getColorBlock(Point(0, 0));
 
-    expect(colorBlock.length, equals(3));
-    expect(colorBlock.every((c) => c.isEqual(Codel(Colors.BLUE))), equals(true));
+    expect(colorBlock.size(), equals(3));
+    expect(colorBlock.getBlock().every((c) => c.isEqual(Codel(Colors.BLUE))), equals(true));
   });
 
   test('block surrounding white codel', () {
@@ -63,10 +64,10 @@ void getColorBlock_tests() {
         }
       }
     }
-    List<Codel> colorBlock = grid.getColorBlock(Point(0, 0));
+    ColorBlock colorBlock = grid.getColorBlock(Point(0, 0));
 
-    expect(colorBlock.length, equals(8));
-    expect(colorBlock.every((c) => c.isEqual(Codel(Colors.BLUE))), equals(true));
+    expect(colorBlock.size(), equals(8));
+    expect(colorBlock.getBlock().every((c) => c.isEqual(Codel(Colors.BLUE))), equals(true));
   });
 }
 
@@ -75,21 +76,21 @@ void setWidth_tests() {
     CodelGrid grid = CodelGrid(width: 3, height: 3);
 
     grid.setWidth(3);
-    expect(grid.getColorBlock(Point(0, 0)).length, equals(9));
+    expect(grid.getColorBlock(Point(0, 0)).size(), equals(9));
   });
 
   test('larger width increases grid size', () {
     CodelGrid grid = CodelGrid(width: 3, height: 3);
 
     grid.setWidth(4);
-    expect(grid.getColorBlock(Point(0, 0)).length, equals(12));
+    expect(grid.getColorBlock(Point(0, 0)).size(), equals(12));
   });
 
   test('smaller width decreases grid size', () {
     CodelGrid grid = CodelGrid(width: 3, height: 3);
 
     grid.setWidth(2);
-    expect(grid.getColorBlock(Point(0, 0)).length, equals(6));
+    expect(grid.getColorBlock(Point(0, 0)).size(), equals(6));
   });
 }
 
@@ -134,21 +135,21 @@ void setHeight_tests() {
     CodelGrid grid = CodelGrid(width: 3, height: 3);
 
     grid.setHeight(3);
-    expect(grid.getColorBlock(Point(0, 0)).length, equals(9));
+    expect(grid.getColorBlock(Point(0, 0)).size(), equals(9));
   });
 
   test('larger height increases grid size', () {
     CodelGrid grid = CodelGrid(width: 3, height: 4);
 
     grid.setHeight(4);
-    expect(grid.getColorBlock(Point(0, 0)).length, equals(12));
+    expect(grid.getColorBlock(Point(0, 0)).size(), equals(12));
   });
 
   test('smaller height decreases grid size', () {
     CodelGrid grid = CodelGrid(width: 3, height: 3);
 
     grid.setHeight(2);
-    expect(grid.getColorBlock(Point(0, 0)).length, equals(6));
+    expect(grid.getColorBlock(Point(0, 0)).size(), equals(6));
   });
 }
 

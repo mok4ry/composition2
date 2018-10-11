@@ -1,9 +1,10 @@
 import 'package:composition2/src/color.dart';
 import 'package:composition2/src/point.dart';
+import 'package:composition2/src/color_block.dart';
 
 class Codel {
   final Color color;
-  List<Codel> _colorBlock = List<Codel>();
+  ColorBlock _colorBlock = null;
   Point _position = Point(0, 0);
 
   Codel(Color this.color);
@@ -16,20 +17,20 @@ class Codel {
     return _position;
   }
 
-  void setColorBlock(List<Codel> colorBlock) {
+  void setColorBlock(ColorBlock colorBlock) {
     this._colorBlock = colorBlock;
   }
 
-  List<Codel> getColorBlock() {
+  ColorBlock getColorBlock() {
     return _colorBlock;
   }
 
   int getColorBlockSize() {
-    return this._colorBlock.length;
+    return this._colorBlock.size();
   }
 
   bool colorBlockSet() {
-    return getColorBlockSize() > 0;
+    return _colorBlock != null;
   }
 
   Color getColor() {
