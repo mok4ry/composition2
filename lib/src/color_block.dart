@@ -3,19 +3,19 @@ import 'codel.dart';
 import 'codel_chooser.dart';
 import 'direction_pointer.dart';
 
-int getY(Point p) {
+int _getY(Point p) {
   return p.getY();
 }
 
-int getX(Point p) {
+int _getX(Point p) {
   return p.getX();
 }
 
-bool greater(int a, int b) {
+bool _greater(int a, int b) {
   return a > b;
 }
 
-bool less(int a, int b) {
+bool _less(int a, int b) {
   return a < b;
 }
 
@@ -43,19 +43,19 @@ List<Codel> _getEdge(List<Codel> block, Function getValue, Function compareValue
 }
 
 List<Codel> _topEdge(List<Codel> block) {
-  return _getEdge(block, getY, less);
+  return _getEdge(block, _getY, _less);
 }
 
 List<Codel> _bottomEdge(List<Codel> block) {
-  return _getEdge(block, getY, greater);
+  return _getEdge(block, _getY, _greater);
 }
 
 List<Codel> _rightEdge(List<Codel> block) {
-  return _getEdge(block, getX, greater);
+  return _getEdge(block, _getX, _greater);
 }
 
 List<Codel> _leftEdge(List<Codel> block) {
-  return _getEdge(block, getX, less);
+  return _getEdge(block, _getX, _less);
 }
 
 Map<DirectionPointer, Function> dpFns = {
