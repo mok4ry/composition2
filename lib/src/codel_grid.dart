@@ -30,7 +30,7 @@ class CodelGrid {
   }
 
   Codel getCodel(Point p) {
-    return _grid[p.getX()][p.getY()];
+    return isInBounds(p) ? _grid[p.getX()][p.getY()] : Codel(Colors.BLACK);
   }
 
   bool isInBounds(Point p) {
