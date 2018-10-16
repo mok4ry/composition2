@@ -39,9 +39,11 @@ int getDeltaY(int y, DirectionPointer dp) {
 class CompositionRunner {
   CodelChooser _codelChooser = CodelChooser.left;
   int _ccToggleCount = 0;
+  bool _ccToggled = false;
 
   DirectionPointer _directionPointer = DirectionPointer.right;
   int _dpToggleCount = 0;
+  bool _dpToggled = false;
 
   Point _position = Point(0, 0);
   List<int> _stack = List<int>();
@@ -65,6 +67,26 @@ class CompositionRunner {
 
   bool running() {
     return _running;
+  }
+
+  void ccToggle(bool directlyToggled, bool toggled) {
+    _ccToggled = toggled && !directlyToggled;
+
+    if (directlyToggled) {
+      _ccToggleCount = 0;
+    } else if (toggled) {
+      _ccToggleCount++;
+    }
+  }
+
+  void dpToggle(bool directlyToggled, bool toggled) {
+    _dpToggled = toggled && !directlyToggled;
+
+    if (directlyToggled) {
+      _dpToggleCount = 0;
+    } else if (toggled) {
+      _dpToggleCount++;
+    }
   }
 
   bool step() {
@@ -97,7 +119,7 @@ class CompositionRunner {
       charInput = _charInput();
     }
 
-    operation.execute(intInput: intInput, charInput: charInput, ccToggled: _ccToggleCount > 0, dpToggled: _dpToggleCount > 0);
+    operation.execute(intInput: intInput, charInput: charInput, ccToggled: _ccToggled, dpToggled: _dpToggled);
 
     if (operation.outputType() == OP_OUTPUT_TYPE.INT) {
       _intOutput(operation.intOutput());
@@ -105,31 +127,28 @@ class CompositionRunner {
       _charOutput(operation.charOutput());
     }
 
-    if (operation.codelChooserIncrement() > 0) {
+    bool ccToggled = operation.codelChooserIncrement() > 0;
+    bool dpToggled = operation.directionPointerIncrement() > 0;
+    if (ccToggled || dpToggled) {
       _codelChooser = CodelChooser.values[(_codelChooser.index + operation.codelChooserIncrement()) % CodelChooser.values.length];
-      if (operation is Switch) {
-        _ccToggleCount = 0;
-      } else {
-        _ccToggleCount++;
-      }
-    } else {
-      _ccToggleCount = 0;
-    }
-
-    if (operation.directionPointerIncrement() > 0) {
       _directionPointer = DirectionPointer.values[(_directionPointer.index + operation.directionPointerIncrement()) % DirectionPointer.values.length];
-      if (operation is Pointer) {
-        _dpToggleCount = 0;
-      } else {
-        _dpToggleCount++;
-      }
+
+      ccToggle(operation is Switch, ccToggled);
+      dpToggle(operation is Pointer, dpToggled);
     } else {
-      _dpToggleCount = 0;
+      ccToggle(false, false);
+      dpToggle(false, false);
     }
 
     if ((_ccToggleCount + _dpToggleCount) == 8) {
       print('Program terminates');
       return false;
+    }
+
+    if (operation is Block) {
+      _position = exitCodelPosition;
+    } else {
+      _position = nextCodelPosition;
     }
 
     print('${operation.operationName()}: ${operation.toString()}');

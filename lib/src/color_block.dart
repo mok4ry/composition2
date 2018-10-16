@@ -116,10 +116,15 @@ class ColorBlock {
   }
 
   Codel getExitBlock(DirectionPointer dp, CodelChooser cc) {
+    // TODO should slide through white blocks in direction of dp without considering cc
     if (_cache[dp][cc] == null) {
       _cache[dp][cc] = ccFns[dp][cc](dpFns[dp](_block)).first;
     }
 
     return _cache[dp][cc];
+  }
+
+  String toString() {
+    return _block.toString();
   }
 }

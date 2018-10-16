@@ -21,7 +21,7 @@ class CodelGrid {
     _height = height == null ? DEFAULT_HEIGHT : height;
     _colorBlocks = List<ColorBlock>();
 
-    _grid = List<List<Codel>>.generate(_width, (int i) => List<Codel>.generate(this._height, (int i) => Codel(_defaultColor)));
+    _grid = List<List<Codel>>.generate(_width, (int x) => List<Codel>.generate(this._height, (int y) => Codel(_defaultColor)..setPosition(Point(x, y))));
   }
 
   void setCodel(Codel c, Point p) {

@@ -61,7 +61,7 @@ class Block extends Operation {
       _codelChooserIncrement = 1;
     } else if (ccToggled) {
       _directionPointerIncrement = 1;
-    } else if (dpToggled) {
+    } else /* if (dpToggled) or neither toggled */ {
       _codelChooserIncrement = 1;
     }
   }
@@ -724,12 +724,12 @@ abstract class Operation {
     Color sourceColor = source.getColor();
     Color destinationColor = destination.getColor();
 
-    if (sourceColor.isEqual(Colors.WHITE)) {
-      return Noop(stack, source, destination);
+    if (destinationColor.isEqual(Colors.BLACK)) {
+      return Block(stack, source, destination);
     }
 
-    if (sourceColor.isEqual(Colors.BLACK)) {
-      return Block(stack, source, destination);
+    if (sourceColor.isEqual(Colors.WHITE)) {
+      return Noop(stack, source, destination);
     }
 
     int hue = destinationColor.getHue() - sourceColor.getHue();
