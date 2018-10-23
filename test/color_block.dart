@@ -13,15 +13,19 @@ final ColorBlock block_3x3 = ColorBlock([
 ]);
 
 void size_tests() {
-  test('size', () {
+  test('size 1x1', () {
     List<Codel> block = [Codel(Colors.WHITE)];
     ColorBlock colorBlock = ColorBlock(block);
 
     expect(colorBlock.size(), equals(1));
   });
+
+  test('size 3x3', () {
+    expect(block_3x3.size(), equals(9));
+  });
 }
 
-void getExistBlock_tests() {
+void getExitBlock_tests() {
   test('dp up, cc left', () {
     Codel exitBlock = block_3x3.getExitBlock(DirectionPointer.up, CodelChooser.left);
 
@@ -73,7 +77,7 @@ void getExistBlock_tests() {
 
 void color_block_all_tests() {
   size_tests();
-  getExistBlock_tests();
+  getExitBlock_tests();
 }
 
 void main() {
