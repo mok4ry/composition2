@@ -91,7 +91,7 @@ class CompositionRunner {
 
   bool step() {
     Codel exitCodel = _grid.getColorBlock(_position).getExitBlock(
-        _directionPointer, _codelChooser);
+        _position, _directionPointer, _codelChooser);
     Point exitCodelPosition = exitCodel.getPosition();
 
     Point nextCodelPosition = exitCodelPosition.getRelative(

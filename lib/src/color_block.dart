@@ -1,4 +1,6 @@
 import 'point.dart';
+import 'color.dart';
+import 'colors.dart';
 import 'codel.dart';
 import 'codel_chooser.dart';
 import 'direction_pointer.dart';
@@ -65,6 +67,21 @@ Map<DirectionPointer, Function> dpFns = {
   DirectionPointer.left: _leftEdge
 };
 
+Map<DirectionPointer, Function> dpSlideFns = {
+  DirectionPointer.up: (Point position, List<Codel> block) {
+    return _topEdge(block.where((Codel c) => c.getPosition().getX() == position.getX()).toList());
+  },
+  DirectionPointer.down: (Point position, List<Codel> block) {
+    return _bottomEdge(block.where((Codel c) => c.getPosition().getX() == position.getX()).toList());
+  },
+  DirectionPointer.left: (Point position, List<Codel> block) {
+    return _leftEdge(block.where((Codel c) => c.getPosition().getY() == position.getY()).toList());
+  },
+  DirectionPointer.right: (Point position, List<Codel> block) {
+    return _rightEdge(block.where((Codel c) => c.getPosition().getY() == position.getY()).toList());
+  }
+};
+
 Map<DirectionPointer, Map<CodelChooser, Function>> ccFns = {
   DirectionPointer.up: {
     CodelChooser.left: _leftEdge,
@@ -115,9 +132,18 @@ class ColorBlock {
     return _block;
   }
 
-  Codel getExitBlock(DirectionPointer dp, CodelChooser cc) {
-    // TODO should slide through white blocks in direction of dp without considering cc
-    if (_cache[dp][cc] == null) {
+  Color getColor() {
+    return _block.first.getColor();
+  }
+
+  Codel getExitBlock(Point position, DirectionPointer dp, CodelChooser cc) {
+    if (_cache[dp][cc] != null) {
+      return _cache[dp][cc];
+    }
+
+    if (getColor().isEqual(Colors.WHITE)) {
+      _cache[dp][cc] = dpSlideFns[dp](position, _block).first;
+    } else {
       _cache[dp][cc] = ccFns[dp][cc](dpFns[dp](_block)).first;
     }
 

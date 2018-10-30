@@ -18,6 +18,11 @@ final ColorBlock block_3x3_blue = ColorBlock([
   Codel(Colors.BLUE)..setPosition(Point(0, 2)), Codel(Colors.BLUE)..setPosition(Point(1, 2)), Codel(Colors.BLUE)..setPosition(Point(2, 2))
 ]);
 
+final topLeft = Point(0, 0);
+final topRight = Point(2, 0);
+final bottomRight = Point(2, 2);
+final bottomLeft = Point(0, 2);
+
 void size_tests() {
   test('size 1x1', () {
     List<Codel> block = [Codel(Colors.WHITE)];
@@ -33,51 +38,75 @@ void size_tests() {
 
 void getExitBlock_tests() {
   test('dp up, cc left', () {
-    Codel exitBlock = block_3x3_blue.getExitBlock(DirectionPointer.up, CodelChooser.left);
+    Codel exitBlock = block_3x3_blue.getExitBlock(topLeft, DirectionPointer.up, CodelChooser.left);
 
-    expect(exitBlock.getPosition(), equals(Point(0, 0)));
+    expect(exitBlock.getPosition(), equals(topLeft));
   });
 
   test('dp up, cc right', () {
-    Codel exitBlock = block_3x3_blue.getExitBlock(DirectionPointer.up, CodelChooser.right);
+    Codel exitBlock = block_3x3_blue.getExitBlock(topLeft, DirectionPointer.up, CodelChooser.right);
 
-    expect(exitBlock.getPosition(), equals(Point(2, 0)));
+    expect(exitBlock.getPosition(), equals(topRight));
   });
 
   test('dp right, cc left', () {
-    Codel exitBlock = block_3x3_blue.getExitBlock(DirectionPointer.right, CodelChooser.left);
+    Codel exitBlock = block_3x3_blue.getExitBlock(topLeft, DirectionPointer.right, CodelChooser.left);
 
-    expect(exitBlock.getPosition(), equals(Point(2, 0)));
+    expect(exitBlock.getPosition(), equals(topRight));
   });
 
   test('dp right, cc right', () {
-    Codel exitBlock = block_3x3_blue.getExitBlock(DirectionPointer.right, CodelChooser.right);
+    Codel exitBlock = block_3x3_blue.getExitBlock(topLeft, DirectionPointer.right, CodelChooser.right);
 
-    expect(exitBlock.getPosition(), equals(Point(2, 2)));
+    expect(exitBlock.getPosition(), equals(bottomRight));
   });
 
   test('dp down, cc left', () {
-    Codel exitBlock = block_3x3_blue.getExitBlock(DirectionPointer.down, CodelChooser.left);
+    Codel exitBlock = block_3x3_blue.getExitBlock(topLeft, DirectionPointer.down, CodelChooser.left);
 
-    expect(exitBlock.getPosition(), equals(Point(2, 2)));
+    expect(exitBlock.getPosition(), equals(bottomRight));
   });
 
   test('dp down, cc right', () {
-    Codel exitBlock = block_3x3_blue.getExitBlock(DirectionPointer.down, CodelChooser.right);
+    Codel exitBlock = block_3x3_blue.getExitBlock(topLeft, DirectionPointer.down, CodelChooser.right);
 
-    expect(exitBlock.getPosition(), equals(Point(0, 2)));
+    expect(exitBlock.getPosition(), equals(bottomLeft));
   });
 
   test('dp left, cc left', () {
-    Codel exitBlock = block_3x3_blue.getExitBlock(DirectionPointer.left, CodelChooser.left);
+    Codel exitBlock = block_3x3_blue.getExitBlock(topLeft, DirectionPointer.left, CodelChooser.left);
 
-    expect(exitBlock.getPosition(), equals(Point(0, 2)));
+    expect(exitBlock.getPosition(), equals(bottomLeft));
   });
 
   test('dp left, cc right', () {
-    Codel exitBlock = block_3x3_blue.getExitBlock(DirectionPointer.left, CodelChooser.right);
+    Codel exitBlock = block_3x3_blue.getExitBlock(topLeft, DirectionPointer.left, CodelChooser.right);
 
-    expect(exitBlock.getPosition(), equals(Point(0, 0)));
+    expect(exitBlock.getPosition(), equals(topLeft));
+  });
+
+  test('all white, dp left, start top left', () {
+    Codel exitBlock = block_3x3_white.getExitBlock(topLeft, DirectionPointer.left, CodelChooser.left);
+
+    expect(exitBlock.getPosition(), equals(topLeft));
+  });
+
+  test('all white, dp right, start top left', () {
+    Codel exitBlock = block_3x3_white.getExitBlock(topLeft, DirectionPointer.right, CodelChooser.left);
+
+    expect(exitBlock.getPosition(), equals(topRight));
+  });
+
+  test('all white, dp right, start top left, different CodelChooser has no effect', () {
+    Codel exitBlock = block_3x3_white.getExitBlock(topLeft, DirectionPointer.right, CodelChooser.right);
+
+    expect(exitBlock.getPosition(), equals(topRight));
+  });
+
+  test('all white, dp left, start bottom right', () {
+    Codel exitBlock = block_3x3_white.getExitBlock(bottomRight, DirectionPointer.left, CodelChooser.right);
+
+    expect(exitBlock.getPosition(), equals(bottomLeft));
   });
 }
 
