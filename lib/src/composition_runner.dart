@@ -11,28 +11,28 @@ import 'operation.dart';
 // lower bound of delay is 17ms (i.e. ~60hz)
 const DELAY_MIN = 17;
 
-int getDeltaX(int x, DirectionPointer dp) {
+int getDeltaX(DirectionPointer dp) {
   if (dp == DirectionPointer.left) {
-    return x - 1;
+    return -1;
   }
 
   if (dp == DirectionPointer.right) {
-    return x + 1;
+    return 1;
   }
 
-  return x;
+  return 0;
 }
 
-int getDeltaY(int y, DirectionPointer dp) {
+int getDeltaY(DirectionPointer dp) {
   if (dp == DirectionPointer.up) {
-    return y - 1;
+    return -1;
   }
 
   if (dp == DirectionPointer.down) {
-    return y + 1;
+    return 1;
   }
 
-  return y;
+  return 0;
 }
 
 class CompositionRunner {
@@ -93,8 +93,8 @@ class CompositionRunner {
     Point exitCodelPosition = exitCodel.getPosition();
 
     Point nextCodelPosition = exitCodelPosition.getRelative(
-        getDeltaX(exitCodelPosition.getX(), _directionPointer),
-        getDeltaY(exitCodelPosition.getY(), _directionPointer)
+        getDeltaX(_directionPointer),
+        getDeltaY(_directionPointer)
     );
     Codel nextCodel = _grid.getCodel(nextCodelPosition);
 
@@ -186,5 +186,14 @@ class CompositionRunner {
 
   void pause() {
     _running = false;
+  }
+
+  String toString() {
+    return """
+      Position: $_position (${_grid.getCodel(_position)})
+      CC: $_codelChooser ($_ccToggleCount $_ccToggled)
+      DP: $_directionPointer ($_dpToggleCount $_dpToggled)
+      Stack: $_stack
+    """;
   }
 }
