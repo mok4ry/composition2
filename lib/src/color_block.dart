@@ -136,7 +136,7 @@ class ColorBlock {
     return _block.first.getColor();
   }
 
-  Codel getExitBlock(Point position, DirectionPointer dp, CodelChooser cc) {
+  Codel getExitCodel(Point position, DirectionPointer dp, CodelChooser cc) {
     if (_cache[dp][cc] != null) {
       return _cache[dp][cc];
     }

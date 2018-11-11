@@ -1,9 +1,8 @@
 import 'dart:async';
 
 import 'point.dart';
-import 'color.dart';
+import 'colors.dart';
 import 'codel.dart';
-import 'color_block.dart';
 import 'codel_grid.dart';
 import 'codel_chooser.dart';
 import 'direction_pointer.dart';
@@ -90,8 +89,7 @@ class CompositionRunner {
   }
 
   bool step() {
-    Codel exitCodel = _grid.getColorBlock(_position).getExitBlock(
-        _position, _directionPointer, _codelChooser);
+    Codel exitCodel = _grid.getColorBlock(_position).getExitCodel(_position, _directionPointer, _codelChooser);
     Point exitCodelPosition = exitCodel.getPosition();
 
     Point nextCodelPosition = exitCodelPosition.getRelative(
@@ -141,7 +139,7 @@ class CompositionRunner {
     }
 
     if ((_ccToggleCount + _dpToggleCount) == 8) {
-      print('Program terminates');
+      print('Program terminates in trapped execution');
       return false;
     }
 

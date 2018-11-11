@@ -19,6 +19,16 @@ void run_tests() {
     expect(runner.step(), equals(true));
     expect(runner.step(), equals(false));
   });
+
+  test('all white, terminates in 4 operations', () {
+    CodelGrid grid = CodelGrid(defaultColor: Colors.WHITE, width: 3, height: 3);
+    CompositionRunner runner = CompositionRunner(grid, NOOP, NOOP, NOOP, NOOP);
+
+    expect(runner.step(), equals(true));
+    expect(runner.step(), equals(true));
+    expect(runner.step(), equals(true));
+    expect(runner.step(), equals(false));
+  });
 }
 
 void composition_runner_all_tests() {

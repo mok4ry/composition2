@@ -36,75 +36,75 @@ void size_tests() {
   });
 }
 
-void getExitBlock_tests() {
+void getExitCodel_tests() {
   test('dp up, cc left', () {
-    Codel exitBlock = block_3x3_blue.getExitBlock(topLeft, DirectionPointer.up, CodelChooser.left);
+    Codel exitBlock = block_3x3_blue.getExitCodel(topLeft, DirectionPointer.up, CodelChooser.left);
 
     expect(exitBlock.getPosition(), equals(topLeft));
   });
 
   test('dp up, cc right', () {
-    Codel exitBlock = block_3x3_blue.getExitBlock(topLeft, DirectionPointer.up, CodelChooser.right);
+    Codel exitBlock = block_3x3_blue.getExitCodel(topLeft, DirectionPointer.up, CodelChooser.right);
 
     expect(exitBlock.getPosition(), equals(topRight));
   });
 
   test('dp right, cc left', () {
-    Codel exitBlock = block_3x3_blue.getExitBlock(topLeft, DirectionPointer.right, CodelChooser.left);
+    Codel exitBlock = block_3x3_blue.getExitCodel(topLeft, DirectionPointer.right, CodelChooser.left);
 
     expect(exitBlock.getPosition(), equals(topRight));
   });
 
   test('dp right, cc right', () {
-    Codel exitBlock = block_3x3_blue.getExitBlock(topLeft, DirectionPointer.right, CodelChooser.right);
+    Codel exitBlock = block_3x3_blue.getExitCodel(topLeft, DirectionPointer.right, CodelChooser.right);
 
     expect(exitBlock.getPosition(), equals(bottomRight));
   });
 
   test('dp down, cc left', () {
-    Codel exitBlock = block_3x3_blue.getExitBlock(topLeft, DirectionPointer.down, CodelChooser.left);
+    Codel exitBlock = block_3x3_blue.getExitCodel(topLeft, DirectionPointer.down, CodelChooser.left);
 
     expect(exitBlock.getPosition(), equals(bottomRight));
   });
 
   test('dp down, cc right', () {
-    Codel exitBlock = block_3x3_blue.getExitBlock(topLeft, DirectionPointer.down, CodelChooser.right);
+    Codel exitBlock = block_3x3_blue.getExitCodel(topLeft, DirectionPointer.down, CodelChooser.right);
 
     expect(exitBlock.getPosition(), equals(bottomLeft));
   });
 
   test('dp left, cc left', () {
-    Codel exitBlock = block_3x3_blue.getExitBlock(topLeft, DirectionPointer.left, CodelChooser.left);
+    Codel exitBlock = block_3x3_blue.getExitCodel(topLeft, DirectionPointer.left, CodelChooser.left);
 
     expect(exitBlock.getPosition(), equals(bottomLeft));
   });
 
   test('dp left, cc right', () {
-    Codel exitBlock = block_3x3_blue.getExitBlock(topLeft, DirectionPointer.left, CodelChooser.right);
+    Codel exitBlock = block_3x3_blue.getExitCodel(topLeft, DirectionPointer.left, CodelChooser.right);
 
     expect(exitBlock.getPosition(), equals(topLeft));
   });
 
   test('all white, dp left, start top left', () {
-    Codel exitBlock = block_3x3_white.getExitBlock(topLeft, DirectionPointer.left, CodelChooser.left);
+    Codel exitBlock = block_3x3_white.getExitCodel(topLeft, DirectionPointer.left, CodelChooser.left);
 
     expect(exitBlock.getPosition(), equals(topLeft));
   });
 
   test('all white, dp right, start top left', () {
-    Codel exitBlock = block_3x3_white.getExitBlock(topLeft, DirectionPointer.right, CodelChooser.left);
+    Codel exitBlock = block_3x3_white.getExitCodel(topLeft, DirectionPointer.right, CodelChooser.left);
 
     expect(exitBlock.getPosition(), equals(topRight));
   });
 
   test('all white, dp right, start top left, different CodelChooser has no effect', () {
-    Codel exitBlock = block_3x3_white.getExitBlock(topLeft, DirectionPointer.right, CodelChooser.right);
+    Codel exitBlock = block_3x3_white.getExitCodel(topLeft, DirectionPointer.right, CodelChooser.right);
 
     expect(exitBlock.getPosition(), equals(topRight));
   });
 
   test('all white, dp left, start bottom right', () {
-    Codel exitBlock = block_3x3_white.getExitBlock(bottomRight, DirectionPointer.left, CodelChooser.right);
+    Codel exitBlock = block_3x3_white.getExitCodel(bottomRight, DirectionPointer.left, CodelChooser.right);
 
     expect(exitBlock.getPosition(), equals(bottomLeft));
   });
@@ -112,7 +112,7 @@ void getExitBlock_tests() {
 
 void color_block_all_tests() {
   size_tests();
-  getExitBlock_tests();
+  getExitCodel_tests();
 }
 
 void main() {
