@@ -1,10 +1,10 @@
 import 'package:test/test.dart';
-import 'package:composition2/src/color_block.dart';
-import 'package:composition2/src/codel.dart';
-import 'package:composition2/src/colors.dart';
-import 'package:composition2/src/point.dart';
-import 'package:composition2/src/direction_pointer.dart';
-import 'package:composition2/src/codel_chooser.dart';
+import 'package:composition2/composition/color_block.dart';
+import 'package:composition2/composition/codel.dart';
+import 'package:composition2/composition/colors.dart';
+import 'package:composition2/composition/point.dart';
+import 'package:composition2/composition/codel_chooser.dart';
+import 'package:composition2/composition/direction_pointer.dart';
 
 final ColorBlock block_3x3_white = ColorBlock([
   Codel(Colors.WHITE)..setPosition(Point(0, 0)), Codel(Colors.WHITE)..setPosition(Point(1, 0)), Codel(Colors.WHITE)..setPosition(Point(2, 0)),

@@ -1,7 +1,7 @@
 import 'package:test/test.dart';
-import 'package:composition2/src/operation.dart';
-import 'package:composition2/src/codel.dart';
-import 'package:composition2/src/colors.dart';
+import 'package:composition2/composition/codel.dart';
+import 'package:composition2/composition/colors.dart';
+import 'package:composition2/composition/operation.dart';
 
 void noop_tests() {
   test('noop does not alter the stack', () {

@@ -1,17 +1,14 @@
 import 'codel_grid.dart';
 import 'composition_runner.dart';
 
-int DEFAULT_WIDTH = 20;
-int DEFAULT_HEIGHT = 20;
-
 class Composition {
   CodelGrid _grid;
   CompositionRunner _runner = null;
   bool _initialized = false;
 
   Composition({ int width, int height }) {
-    int w = width == null ? DEFAULT_WIDTH : width;
-    int h = height == null ? DEFAULT_HEIGHT : height;
+    int w = width;
+    int h = height;
     this._grid = CodelGrid(width: w, height: h);
   }
 

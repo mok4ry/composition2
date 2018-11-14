@@ -1,9 +1,9 @@
 import 'package:test/test.dart';
-import 'package:composition2/src/composition_runner.dart';
-import 'package:composition2/src/codel_grid.dart';
-import 'package:composition2/src/codel.dart';
-import 'package:composition2/src/point.dart';
-import 'package:composition2/src/colors.dart';
+import 'package:composition2/composition/colors.dart';
+import 'package:composition2/composition/codel_grid.dart';
+import 'package:composition2/composition/composition_runner.dart';
+import 'package:composition2/composition/codel.dart';
+import 'package:composition2/composition/point.dart';
 
 NOOP() {}
 
