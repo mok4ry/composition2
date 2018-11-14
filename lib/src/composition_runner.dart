@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'point.dart';
-import 'colors.dart';
 import 'codel.dart';
 import 'codel_grid.dart';
 import 'codel_chooser.dart';

@@ -1,8 +1,8 @@
-import 'package:composition2/src/codel.dart';
-import 'package:composition2/src/color.dart';
-import 'package:composition2/src/colors.dart';
-import 'package:composition2/src/point.dart';
-import 'package:composition2/src/color_block.dart';
+import 'codel.dart';
+import 'color.dart';
+import 'colors.dart';
+import 'point.dart';
+import 'color_block.dart';
 
 Color DEFAULT_COLOR = Colors.WHITE;
 const int DEFAULT_WIDTH = 20;

@@ -1,6 +1,6 @@
-import 'package:composition2/src/color.dart';
-import 'package:composition2/src/point.dart';
-import 'package:composition2/src/color_block.dart';
+import 'color.dart';
+import 'point.dart';
+import 'color_block.dart';
 
 class Codel {
   final Color color;

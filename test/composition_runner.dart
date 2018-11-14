@@ -68,7 +68,7 @@ void step_tests() {
     expect(runner.step(), equals(false));
   });
 
-  test('push value and output', () {
+  test('push int value and output', () {
     CodelGrid grid = CodelGrid(width: 3, height: 1);
     IOWrapper io = IOWrapper();
     CompositionRunner runner = CompositionRunner(grid, io.intInput, io.charInput, io.intOutput, io.charOutput);
